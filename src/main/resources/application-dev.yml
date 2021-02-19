@@ -1,0 +1,11 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  output:
+    ansi:
+      enabled: always
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/coin
+    username: postgres
+    password: 1313

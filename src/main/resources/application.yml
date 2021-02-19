@@ -1,0 +1,13 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  output:
+    ansi:
+      enabled: detect
+  profiles:
+    active: ${PROFILES_ACTIVE:dev}
+  jpa:
+    ddl-auto: none
+  jackson:
+    date-format: com.fasterxml.jackson.databind.util.StdDateFormat
