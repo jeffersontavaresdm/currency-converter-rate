@@ -29,29 +29,32 @@ class CoinRateService(
         val responseBody = response.body() ?: throw ValidationException()
         val assets = responseBody.values
 
-        assets.forEach { asset ->
+        if (assets.size < 10) {
 
-          val today = LocalDate.now()
-          val coinInfoToday = coinRepository
-            .findFirstByTypeAndLastUpdateTimeOrderByLastUpdateTimeDesc(coin, today) ?: coinRepository
-            .save(
+          assets.forEach { asset ->
+
+            val today = LocalDate.now()
+            val coinInfoToday = coinRepository
+              .findFirstByTypeAndLastUpdateTimeOrderByLastUpdateTimeDesc(coin, today) ?: coinRepository
+              .save(
+                Coin(
+                  id = null,
+                  type = asset.code,
+                  name = asset.name,
+                  value = asset.high,
+                  lastUpdateTime = today
+                )
+              )
+            coinRepository.save(
               Coin(
-                id = null,
+                id = coinInfoToday.id,
                 type = asset.code,
                 name = asset.name,
                 value = asset.high,
                 lastUpdateTime = today
               )
             )
-          coinRepository.save(
-            Coin(
-              id = coinInfoToday.id,
-              type = asset.code,
-              name = asset.name,
-              value = asset.high,
-              lastUpdateTime = today
-            )
-          )
+          }
         }
       } else throw ValidationException("this currency does not exist")
     } else throw BadRequestException("currency abbreviation is not correct")
