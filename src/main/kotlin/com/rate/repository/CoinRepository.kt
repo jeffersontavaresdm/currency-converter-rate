@@ -6,8 +6,8 @@ import java.time.LocalDate
 
 interface CoinRepository : JpaRepository<Coin, Long> {
 
-  fun findAllByTypeOrderByLastUpdateTimeDesc(coin: String): List<Coin>
+  fun findAllByTypeOrderByLastUpdateDateDesc(coin: String): List<Coin>
 
-  fun findFirstByTypeAndLastUpdateTimeOrderByLastUpdateTimeDesc(code: String, today: LocalDate): Coin?
+  fun findFirstByTypeAndLastUpdateDateOrderByLastUpdateDateDesc(code: String, today: LocalDate): Coin?
 
 }

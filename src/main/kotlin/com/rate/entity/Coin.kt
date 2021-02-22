@@ -24,6 +24,6 @@ data class Coin(
   val value: Double,
 
   @field:JsonIgnore
-  val lastUpdateTime: LocalDate
+  val lastUpdateDate: LocalDate
 
 )

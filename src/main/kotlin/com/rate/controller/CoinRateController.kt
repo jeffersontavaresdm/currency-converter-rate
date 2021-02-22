@@ -22,7 +22,22 @@ class CoinRateController(val coinRateService: CoinRateService) {
         coinType = coin.type,
         name = coin.name,
         value = coin.value,
-        date = coin.lastUpdateTime
+        date = coin.lastUpdateDate
+      )
+    }
+  }
+
+  @GetMapping("/all")
+  fun getAllToday(): List<CoinDTO> {
+
+    val values = coinRateService.getAllToday()
+
+    return values.map { coin ->
+      CoinDTO(
+        coinType = coin.type,
+        name = coin.name,
+        value = coin.value,
+        date = coin.lastUpdateDate
       )
     }
   }
