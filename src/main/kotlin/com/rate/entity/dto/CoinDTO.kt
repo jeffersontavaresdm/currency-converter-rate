@@ -6,7 +6,7 @@ data class CoinDTO(
 
   val coinType: String,
   val name: String,
-  val valueToday: Double,
-  val lastUpdate: LocalDate
+  val value: Double,
+  val date: LocalDate
 
 )

@@ -1,10 +1,11 @@
 package com.rate.controller
 
-import com.rate.entity.Coin
 import com.rate.entity.dto.CoinDTO
 import com.rate.service.CoinRateService
-import org.springframework.data.domain.Page
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 
 @Suppress("unused")
 @RestController
@@ -14,26 +15,15 @@ class CoinRateController(val coinRateService: CoinRateService) {
   @GetMapping("/{coinType}")
   fun getCoinInfo(@PathVariable("coinType") coinType: String): List<CoinDTO> {
 
-    val coinList = coinRateService.rate(coinType.toUpperCase())
+    val infoList = coinRateService.rate(coinType.toUpperCase())
 
-    return coinList.map { coin ->
+    return infoList.map { coin ->
       CoinDTO(
         coinType = coin.type,
         name = coin.name,
-        valueToday = coin.value,
-        lastUpdate = coin.lastUpdateTime
+        value = coin.value,
+        date = coin.lastUpdateTime
       )
     }
-  }
-
-
-  @GetMapping
-  fun list(
-
-    @RequestParam("page") page: Int,
-    @RequestParam("pageSize") pageSize: Int
-
-  ): Mono<Page<Coin>> {
-
   }
 }

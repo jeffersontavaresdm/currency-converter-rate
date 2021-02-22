@@ -20,10 +20,7 @@ class CoinRateService(
 
     if (coin.isNotBlank() && coin.length == 3) {
 
-      val response = awesomeApi
-        .makeApiCall(coin)
-        .execute()
-
+      val response = awesomeApi.makeApiCall(coin).execute()
       if (response.isSuccessful) {
 
         val responseBody = response.body() ?: throw ValidationException()

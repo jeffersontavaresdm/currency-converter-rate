@@ -7,7 +7,7 @@ import com.rate.exception.ValidationException
 import org.springframework.stereotype.Service
 
 @Service
-class AwesomeApiTestService(val awesomeApi: AwesomeApi) {
+class AwesomeApiService(val awesomeApi: AwesomeApi) {
 
   fun getAllCoins(): Map<String, Asset> {
 

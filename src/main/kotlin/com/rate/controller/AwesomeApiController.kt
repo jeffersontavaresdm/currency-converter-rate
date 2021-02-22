@@ -1,19 +1,19 @@
 package com.rate.controller
 
 import com.rate.api.Asset
-import com.rate.service.AwesomeApiTestService
+import com.rate.service.AwesomeApiService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/v1/test")
-class AwesomeApiTestController(val testService: AwesomeApiTestService) {
+@RequestMapping("/api/v1/coinType")
+class AwesomeApiController(val service: AwesomeApiService) {
 
   @GetMapping("/all")
   fun getAllCoin(): Map<String, Asset> {
-    return testService.getAllCoins()
+    return service.getAllCoins()
   }
 
   @GetMapping("/{coin}")
@@ -23,6 +23,6 @@ class AwesomeApiTestController(val testService: AwesomeApiTestService) {
 
   ): Map<String, Asset> {
 
-    return testService.getCoin(coin)
+    return service.getCoin(coin)
   }
 }
