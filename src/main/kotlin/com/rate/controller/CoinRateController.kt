@@ -3,9 +3,11 @@ package com.rate.controller
 import com.rate.entity.dto.CoinDTO
 import com.rate.service.CoinRateService
 import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 
 @Suppress("unused")
 @RestController
@@ -16,9 +18,9 @@ class CoinRateController(val coinRateService: CoinRateService) {
   fun getCoinInfo(
 
     @PathVariable("coinType") coinType: String,
-    page: Pageable
+    page: Pageable,
 
-  ): Page<CoinDTO> {
+    ): Page<CoinDTO> {
 
     val infoList = coinRateService.rate(coinType.toUpperCase(), page)
 
@@ -28,28 +30,7 @@ class CoinRateController(val coinRateService: CoinRateService) {
         name = coin.name,
         maxValue = coin.maxValue,
         minValue = coin.minValue,
-        date = coin.lastUpdateDate
-      )
-    }
-  }
-
-  @GetMapping("/all")
-  fun getAllToday(
-
-    @RequestParam("page") page: Int,
-    @RequestParam("pageSize") pageSize: Int
-
-  ): Page<CoinDTO> {
-
-    val values = coinRateService.getAllToday(PageRequest.of(page, pageSize))
-
-    return values.map { coin ->
-      CoinDTO(
-        coinType = coin.type,
-        name = coin.name,
-        maxValue = coin.maxValue,
-        minValue = coin.minValue,
-        date = coin.lastUpdateDate
+        date = coin.savedDate
       )
     }
   }

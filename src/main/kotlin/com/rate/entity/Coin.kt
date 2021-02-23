@@ -2,6 +2,7 @@ package com.rate.entity
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import java.time.LocalDate
+import java.time.LocalTime
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -27,6 +28,9 @@ data class Coin(
   val minValue: Double,
 
   @field:JsonIgnore
-  val lastUpdateDate: LocalDate
+  val lastUpdateTime: LocalTime,
 
-)
+  @field:JsonIgnore
+  val savedDate: LocalDate,
+
+  )
