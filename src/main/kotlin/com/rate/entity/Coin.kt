@@ -21,7 +21,10 @@ data class Coin(
   val name: String,
 
   @field:JsonIgnore
-  val value: Double,
+  val maxValue: Double,
+
+  @field:JsonIgnore
+  val minValue: Double,
 
   @field:JsonIgnore
   val lastUpdateDate: LocalDate
