@@ -8,7 +8,7 @@ import java.time.LocalDate
 
 interface CoinRepository : JpaRepository<Coin, Long> {
 
-  fun findAllByTypeOrderBySavedDateDesc(coin: String, page: Pageable): Page<Coin>
+  fun findAllByTypeOrderBySavedDateDesc(coin: String, pageable: Pageable): Page<Coin>
 
   fun findByTypeAndSavedDate(coin: String, today: LocalDate): Coin?
 

@@ -3,11 +3,8 @@ package com.rate.controller
 import com.rate.entity.dto.CoinDTO
 import com.rate.service.CoinRateService
 import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.data.domain.PageRequest
+import org.springframework.web.bind.annotation.*
 
 @Suppress("unused")
 @RestController
@@ -18,11 +15,12 @@ class CoinRateController(val coinRateService: CoinRateService) {
   fun getCoinInfo(
 
     @PathVariable("coinType") coinType: String,
-    page: Pageable,
+    @RequestParam("page") page: Int,
+    @RequestParam("pageSize") pageSize: Int,
 
     ): Page<CoinDTO> {
 
-    val infoList = coinRateService.currencyValue(coinType.toUpperCase(), page)
+    val infoList = coinRateService.currencyValue(coinType.toUpperCase(), PageRequest.of(page, pageSize))
 
     return infoList.map { coin ->
       CoinDTO(
