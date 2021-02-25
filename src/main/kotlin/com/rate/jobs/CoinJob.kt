@@ -24,7 +24,7 @@ class CoinJob(
 
   private val logger = LoggerFactory.getLogger(javaClass)
 
-  @Scheduled(fixedDelay = 3000)
+  @Scheduled(fixedDelay = 1800000)
   fun run() {
 
     logger.info("updating values...")
@@ -50,8 +50,6 @@ class CoinJob(
                   name = asset.name,
                   maxValue = asset.high,
                   minValue = asset.low,
-                  lastUpdateTime = now.toLocalTime(),
-                  savedDate = now.toLocalDate()
                 )
               )
         coinRateService.update(

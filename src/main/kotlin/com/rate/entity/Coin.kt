@@ -28,9 +28,9 @@ data class Coin(
   val minValue: Double,
 
   @field:JsonIgnore
-  val lastUpdateTime: LocalTime,
+  val lastUpdateTime: LocalTime = LocalTime.now(),
 
   @field:JsonIgnore
-  val savedDate: LocalDate,
+  val savedDate: LocalDate = LocalDate.now(),
 
   )
