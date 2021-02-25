@@ -22,7 +22,7 @@ class CoinRateController(val coinRateService: CoinRateService) {
 
     ): Page<CoinDTO> {
 
-    val infoList = coinRateService.rate(coinType.toUpperCase(), page)
+    val infoList = coinRateService.currencyValue(coinType.toUpperCase(), page)
 
     return infoList.map { coin ->
       CoinDTO(

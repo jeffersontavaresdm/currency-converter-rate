@@ -13,18 +13,19 @@ import java.time.OffsetDateTime
 @Service
 class CoinRateService(
 
-  val coinRepository: CoinRepository,
-  val awesomeApi: AwesomeApi,
+  private val coinRepository: CoinRepository,
+  private val awesomeApi: AwesomeApi,
 
   ) {
 
-  fun rate(coin: String, page: Pageable): Page<Coin> {
+  fun rate(coin: String) {
 
     val response = awesomeApi.makeApiCall(coin).execute()
 
     if (response.isSuccessful) {
+      val responseBody = response.body()
+        ?: throw BadRequestException(HttpStatus.EXPECTATION_FAILED.toString())
 
-      val responseBody = response.body() ?: throw BadRequestException()
       val assets = responseBody.values
 
       assets.forEach { asset ->
@@ -52,6 +53,9 @@ class CoinRateService(
         )
       }
     } else throw BadRequestException(HttpStatus.EXPECTATION_FAILED.toString())
+  }
+
+  fun currencyValue(coin: String, page: Pageable): Page<Coin> {
     return coinRepository.findAllByTypeOrderBySavedDateDesc(coin, page)
   }
 }
