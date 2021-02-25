@@ -24,12 +24,12 @@ class CoinJob(
 
   private val logger = LoggerFactory.getLogger(javaClass)
 
-  @Scheduled(fixedDelay = 1800000)
+  @Scheduled(fixedDelay = 1000)
   fun run() {
 
     logger.info("updating values...")
 
-    val response = awesomeApi.makeApiCall("").execute()
+    val response = awesomeApi.makeApiCall("/all").execute()
 
     if (response.isSuccessful) {
 
@@ -62,6 +62,9 @@ class CoinJob(
         )
       }
       logger.info("...updates successful!\n")
-    } else logger.info(response.errorBody().toString())
+    } else {
+      logger.info("some error was found")
+      logger.info(response.errorBody().toString())
+    }
   }
 }

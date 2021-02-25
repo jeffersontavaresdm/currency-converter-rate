@@ -6,7 +6,7 @@ import retrofit2.http.Path
 
 interface AwesomeApi {
 
-  @GET("/json/all/{coin}")
+  @GET("/json/{coin}")
   fun makeApiCall(
 
     @Path("coin") coin: String

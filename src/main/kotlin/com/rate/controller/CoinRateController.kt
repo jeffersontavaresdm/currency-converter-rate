@@ -4,7 +4,6 @@ import com.rate.entity.dto.CoinDTO
 import com.rate.service.CoinRateService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Pageable
 import org.springframework.web.bind.annotation.*
 
 @Suppress("unused")
@@ -13,16 +12,16 @@ import org.springframework.web.bind.annotation.*
 class CoinRateController(val coinRateService: CoinRateService) {
 
   @GetMapping("/{coinType}")
-  fun getCoinInfo(
+  fun list(
 
     @PathVariable("coinType") coinType: String,
     @RequestParam("page") page: Int,
     @RequestParam("pageSize") pageSize: Int,
 //    pageable: Pageable,
 
-    ): Page<CoinDTO> {
+  ): Page<CoinDTO> {
 
-    val infoList = coinRateService.currencyValue(
+    val infoList = coinRateService.getInfoList(
       coin = coinType.toUpperCase(),
       pageable = PageRequest.of(page, pageSize)
 //      pageable = pageable

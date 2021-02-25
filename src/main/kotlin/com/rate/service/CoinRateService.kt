@@ -13,7 +13,7 @@ class CoinRateService(private val coinRepository: CoinRepository) {
     return coinRepository.save(coin)
   }
 
-  fun currencyValue(coin: String, pageable: Pageable): Page<Coin> {
+  fun getInfoList(coin: String, pageable: Pageable): Page<Coin> {
     return coinRepository.findAllByTypeOrderBySavedDateDesc(coin, pageable)
   }
 }
