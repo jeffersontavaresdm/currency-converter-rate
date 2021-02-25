@@ -1,4 +1,4 @@
-CREATE TABLE coin
+CREATE TABLE currency
 (
     id                          BIGSERIAL                       PRIMARY KEY,
     type                        VARCHAR(10)                     NOT NULL,

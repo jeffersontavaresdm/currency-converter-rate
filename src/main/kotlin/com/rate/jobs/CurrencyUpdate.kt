@@ -3,10 +3,10 @@
 package com.rate.jobs
 
 import com.rate.api.AwesomeApi
-import com.rate.entity.Coin
+import com.rate.entity.Currency
 import com.rate.exception.BadRequestException
-import com.rate.repository.CoinRepository
-import com.rate.service.CoinRateService
+import com.rate.repository.CurrencyRepository
+import com.rate.service.CurrencyRateServer
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.scheduling.annotation.Scheduled
@@ -14,17 +14,17 @@ import org.springframework.stereotype.Component
 import java.time.OffsetDateTime
 
 @Component
-class CoinJob(
+class CurrencyUpdate(
 
-  private val coinRateService: CoinRateService,
-  private val coinRepository: CoinRepository,
+  private val currencyRateServer: CurrencyRateServer,
+  private val currencyRepository: CurrencyRepository,
   private val awesomeApi: AwesomeApi,
 
   ) {
 
   private val logger = LoggerFactory.getLogger(javaClass)
 
-  @Scheduled(fixedDelay = 1000)
+  @Scheduled(fixedDelay = 180000)
   fun run() {
 
     logger.info("updating values...")
@@ -40,11 +40,11 @@ class CoinJob(
       assets.forEach { asset ->
 
         val now = OffsetDateTime.now()
-        val coinInfoToday =
-          coinRepository.findByTypeAndSavedDate(asset.code, now.toLocalDate())
-            ?: coinRateService
+        val currencyInfoToday =
+          currencyRepository.findByTypeAndSavedDate(asset.code, now.toLocalDate())
+            ?: currencyRateServer
               .update(
-                Coin(
+                Currency(
                   id = null,
                   type = asset.code,
                   name = asset.name,
@@ -52,8 +52,8 @@ class CoinJob(
                   minValue = asset.low,
                 )
               )
-        coinRateService.update(
-          coinInfoToday.copy(
+        currencyRateServer.update(
+          currencyInfoToday.copy(
             maxValue = asset.high,
             minValue = asset.low,
             lastUpdateTime = now.toLocalTime(),
@@ -64,7 +64,7 @@ class CoinJob(
       logger.info("...updates successful!\n")
     } else {
       logger.info("some error was found")
-      logger.info(response.errorBody().toString())
+      logger.info(response.errorBody()?.string())
     }
   }
 }

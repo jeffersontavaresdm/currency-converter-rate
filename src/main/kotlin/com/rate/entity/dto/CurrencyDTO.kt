@@ -2,9 +2,9 @@ package com.rate.entity.dto
 
 import java.time.LocalDate
 
-data class CoinDTO(
+data class CurrencyDTO(
 
-  val coinType: String,
+  val currencyType: String,
   val name: String,
   val maxValue: Double,
   val minValue: Double,
