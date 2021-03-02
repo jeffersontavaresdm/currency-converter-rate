@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 @Service
-class CurrencyRateServer(private val currencyRepository: CurrencyRepository) {
+class CurrencyRateService(private val currencyRepository: CurrencyRepository) {
 
   fun update(currency: Currency): Currency {
     return currencyRepository.save(currency)

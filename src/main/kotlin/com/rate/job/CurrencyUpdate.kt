@@ -1,12 +1,12 @@
 @file:Suppress("unused")
 
-package com.rate.jobs
+package com.rate.job
 
 import com.rate.api.AwesomeApi
 import com.rate.entity.Currency
 import com.rate.exception.BadRequestException
 import com.rate.repository.CurrencyRepository
-import com.rate.service.CurrencyRateServer
+import com.rate.service.CurrencyRateService
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.scheduling.annotation.Scheduled
@@ -16,7 +16,7 @@ import java.time.OffsetDateTime
 @Component
 class CurrencyUpdate(
 
-  private val currencyRateServer: CurrencyRateServer,
+  private val currencyRateService: CurrencyRateService,
   private val currencyRepository: CurrencyRepository,
   private val awesomeApi: AwesomeApi,
 
@@ -42,7 +42,7 @@ class CurrencyUpdate(
         val now = OffsetDateTime.now()
         val currencyInfoToday =
           currencyRepository.findByTypeAndSavedDate(asset.code, now.toLocalDate())
-            ?: currencyRateServer
+            ?: currencyRateService
               .update(
                 Currency(
                   id = null,
@@ -52,7 +52,7 @@ class CurrencyUpdate(
                   minValue = asset.low,
                 )
               )
-        currencyRateServer.update(
+        currencyRateService.update(
           currencyInfoToday.copy(
             maxValue = asset.high,
             minValue = asset.low,
