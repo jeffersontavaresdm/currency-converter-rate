@@ -8,4 +8,4 @@ spring:
   datasource:
     url: jdbc:postgresql://127.0.0.1:5432/currency
     username: postgres
-    password: 1313
+    password: 13c13
