@@ -12,7 +12,6 @@ class AwesomeApiConfig {
 
   @Bean
   fun awesomeApi(): AwesomeApi {
-
     val mapper = ObjectMapper()
       .findAndRegisterModules()
       .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)

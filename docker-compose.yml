@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  core-postgres:
+    image: postgres:13
+    restart: always
+    container_name: postgres-rate
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: rate
+      POSTGRES_USER: rate
+      POSTGRES_DB: rate

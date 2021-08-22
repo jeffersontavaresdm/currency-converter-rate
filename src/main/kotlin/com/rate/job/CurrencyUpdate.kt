@@ -15,12 +15,10 @@ import java.time.OffsetDateTime
 
 @Component
 class CurrencyUpdate(
-
   private val currencyRateService: CurrencyRateService,
   private val currencyRepository: CurrencyRepository,
   private val awesomeApi: AwesomeApi,
-
-  ) {
+) {
 
   private val logger = LoggerFactory.getLogger(javaClass)
 
@@ -29,30 +27,30 @@ class CurrencyUpdate(
 
     logger.info("updating values...")
 
-    val response = awesomeApi.makeApiCall("/all").execute()
+    val response = awesomeApi
+      .makeApiCall("/all")
+      .execute()
 
     if (response.isSuccessful) {
-
       val responseBody = response.body()
         ?: throw BadRequestException(HttpStatus.EXPECTATION_FAILED.toString())
       val assets = responseBody.values
 
       assets.forEach { asset ->
-
         val now = OffsetDateTime.now()
-        val currencyInfoToday =
-          currencyRepository.findByTypeAndSavedDate(asset.code, now.toLocalDate())
-            ?: currencyRateService
-              .update(
-                Currency(
-                  id = null,
-                  type = asset.code,
-                  name = asset.name,
-                  maxValue = asset.high,
-                  minValue = asset.low,
-                )
+        val currencyInfoToday = currencyRepository
+          .findByTypeAndSavedDate(asset.code, now.toLocalDate())
+          ?: currencyRateService
+            .save(
+              Currency(
+                id = null,
+                type = asset.code,
+                name = asset.name,
+                maxValue = asset.high,
+                minValue = asset.low,
               )
-        currencyRateService.update(
+            )
+        currencyRateService.save(
           currencyInfoToday.copy(
             maxValue = asset.high,
             minValue = asset.low,
@@ -61,10 +59,11 @@ class CurrencyUpdate(
           )
         )
       }
-      logger.info("...updates successful!\n")
+      logger.info("...updates successfully!\n")
     } else {
-      logger.info("some error was found")
-      logger.info(response.errorBody()?.string())
+      response.errorBody()?.let {
+        logger.error("some error was found. Error: {}", response.errorBody()?.string())
+      }
     }
   }
 }

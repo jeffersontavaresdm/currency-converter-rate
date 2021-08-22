@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 @Service
 class CurrencyRateService(private val currencyRepository: CurrencyRepository) {
 
-  fun update(currency: Currency): Currency {
+  fun save(currency: Currency): Currency {
     return currencyRepository.save(currency)
   }
 

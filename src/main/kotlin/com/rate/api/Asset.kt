@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import java.util.*
 
 data class Asset(
-
   val code: String,
   val name: String,
   val high: Double,

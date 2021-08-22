@@ -6,6 +6,6 @@ spring:
     ansi:
       enabled: always
   datasource:
-    url: jdbc:postgresql://127.0.0.1:5432/currency
-    username: postgres
-    password: 13c13
+    url: jdbc:postgresql://127.0.0.1:5432/rate
+    username: rate
+    password: rate
