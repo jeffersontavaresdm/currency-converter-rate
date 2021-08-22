@@ -2,7 +2,6 @@ package com.rate.controller
 
 import com.rate.entity.dto.CurrencyDTO
 import com.rate.service.CurrencyRateService
-import com.rate.utils.loggerFor
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.web.bind.annotation.GetMapping
@@ -15,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/v1/rate")
 class CurrencyRateController(val currencyRateService: CurrencyRateService) {
 
-  private val logger = loggerFor()
-
   @GetMapping("/{currencyType}")
   fun list(
     @PathVariable("currencyType") currencyType: String,
@@ -28,7 +25,7 @@ class CurrencyRateController(val currencyRateService: CurrencyRateService) {
       pageable = pageable
     )
 
-    val page = infoList.map { currency ->
+    infoList.map { currency ->
       CurrencyDTO(
         currencyType = currency.type,
         name = currency.name,
@@ -37,9 +34,5 @@ class CurrencyRateController(val currencyRateService: CurrencyRateService) {
         date = currency.savedDate,
       )
     }
-
-    logger.info(page.content.toString())
-
-    return page
   }
 }
