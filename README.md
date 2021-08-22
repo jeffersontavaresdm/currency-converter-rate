@@ -1,1 +1,1 @@
-# rate
+# rate currency
