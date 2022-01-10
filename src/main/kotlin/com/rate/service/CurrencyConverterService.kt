@@ -27,4 +27,18 @@ class CurrencyConverterService(private val repository: CurrencyRepository) {
       )
     }
   }
+
+  fun getAll(pageable: Pageable): Page<CurrencyDTO> {
+    return repository
+      .findAll(pageable)
+      .map { currency ->
+        CurrencyDTO(
+          currencyType = currency.type,
+          name = currency.name,
+          maxValue = currency.maxValue,
+          minValue = currency.minValue,
+          date = currency.savedDate,
+        )
+      }
+  }
 }
