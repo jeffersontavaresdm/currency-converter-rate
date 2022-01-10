@@ -55,6 +55,7 @@ data class Currency(
         lastUpdateTime: $lastUpdateTime
         savedDate: $savedDate
       }
+      
       """.trimMargin()
   }
 }

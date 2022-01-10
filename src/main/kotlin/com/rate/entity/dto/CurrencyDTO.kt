@@ -1,5 +1,6 @@
 package com.rate.entity.dto
 
+import com.rate.entity.Currency
 import java.time.LocalDate
 
 data class CurrencyDTO(
@@ -9,3 +10,13 @@ data class CurrencyDTO(
   val minValue: Double,
   val date: LocalDate,
 )
+
+fun Currency.toDTO(): CurrencyDTO {
+  return CurrencyDTO(
+    currencyType = type,
+    name = name,
+    maxValue = maxValue,
+    minValue = minValue,
+    date = savedDate
+  )
+}
