@@ -6,8 +6,8 @@ import org.springframework.scheduling.annotation.EnableScheduling
 
 @EnableScheduling
 @SpringBootApplication
-class RateApplication
+class CurrencyConverterApplication
 
 fun main(args: Array<String>) {
-  runApplication<RateApplication>(*args)
+  runApplication<CurrencyConverterApplication>(*args)
 }
