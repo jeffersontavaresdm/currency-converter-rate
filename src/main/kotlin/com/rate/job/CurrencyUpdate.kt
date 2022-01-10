@@ -6,52 +6,51 @@ import com.rate.api.AwesomeApi
 import com.rate.entity.Currency
 import com.rate.exception.BadRequestException
 import com.rate.repository.CurrencyRepository
-import com.rate.service.CurrencyRateService
-import org.slf4j.LoggerFactory
-import org.springframework.http.HttpStatus
+import com.rate.service.CurrencyConverterService
+import com.rate.utils.loggerFor
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import java.time.OffsetDateTime
 
 @Component
 class CurrencyUpdate(
-  private val currencyRateService: CurrencyRateService,
+  private val service: CurrencyConverterService,
   private val currencyRepository: CurrencyRepository,
-  private val awesomeApi: AwesomeApi,
+  private val api: AwesomeApi,
 ) {
 
-  private val logger = LoggerFactory.getLogger(javaClass)
+  private val logger = loggerFor()
 
   @Scheduled(fixedDelay = 180000)
   fun run() {
 
     logger.info("updating values...")
 
-    val response = awesomeApi
-      .makeApiCall("/all")
+    val response = api
+      .makeCall("/all")
       .execute()
 
     if (response.isSuccessful) {
-      val responseBody = response.body()
-        ?: throw BadRequestException(HttpStatus.EXPECTATION_FAILED.toString())
+      val responseBody = response.body() ?: throw BadRequestException("response body is null")
       val assets = responseBody.values
 
       assets.forEach { asset ->
         val now = OffsetDateTime.now()
-        val currencyInfoToday = currencyRepository
-          .findByTypeAndSavedDate(asset.code, now.toLocalDate())
-          ?: currencyRateService
-            .save(
-              Currency(
-                id = null,
-                type = asset.code,
-                name = asset.name,
-                maxValue = asset.high,
-                minValue = asset.low,
-              )
-            )
-        currencyRateService.save(
-          currencyInfoToday.copy(
+        val infoToday = currencyRepository
+          .findByTypeAndSavedDate(
+            currency = asset.code,
+            today = now.toLocalDate()
+          ) ?: service.save(
+          Currency(
+            id = null,
+            type = asset.code,
+            name = asset.name,
+            maxValue = asset.high,
+            minValue = asset.low,
+          )
+        )
+        service.save(
+          infoToday.copy(
             maxValue = asset.high,
             minValue = asset.low,
             lastUpdateTime = now.toLocalTime(),
@@ -59,10 +58,10 @@ class CurrencyUpdate(
           )
         )
       }
-      logger.info("...updates successfully!\n")
+      logger.info("...updates successfully!")
     } else {
       response.errorBody()?.let {
-        logger.error("some error was found. Error: {}", response.errorBody()?.string())
+        logger.error("some error was found. Error: {}", response.errorBody()!!.string())
       }
     }
   }

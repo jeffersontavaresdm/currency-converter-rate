@@ -7,9 +7,5 @@ import retrofit2.http.Path
 interface AwesomeApi {
 
   @GET("/json/{currency}")
-  fun makeApiCall(
-
-    @Path("currency") currency: String
-
-  ): Call<Map<String, Asset>>
+  fun makeCall(@Path("currency") currency: String): Call<Map<String, Asset>>
 }

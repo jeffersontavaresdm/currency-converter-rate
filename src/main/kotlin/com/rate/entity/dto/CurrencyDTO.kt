@@ -7,9 +7,5 @@ data class CurrencyDTO(
   val name: String,
   val maxValue: Double,
   val minValue: Double,
-  val date: LocalDate
-) {
-  override fun toString(): String {
-    return "\nCurrency: {\n  type: $currencyType\n  name: $name\n  maxValue: $maxValue\n  minValue: $minValue\n  date: $date\n}\n"
-  }
-}
+  val date: LocalDate,
+)

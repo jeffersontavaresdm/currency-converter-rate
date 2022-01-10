@@ -32,4 +32,29 @@ data class Currency(
 
   @field:JsonIgnore
   val savedDate: LocalDate = LocalDate.now(),
-)
+) {
+  override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (other == null || Hibernate.getClass(this) != Hibernate.getClass(other)) return false
+    other as Currency
+
+    return id != null && id == other.id
+  }
+
+  override fun hashCode(): Int = javaClass.hashCode()
+
+  @Override
+  override fun toString(): String {
+    return """
+      ${this::class.simpleName} {
+        id: $id
+        type: $type
+        name: $name
+        maxValue: $maxValue
+        minValue: $minValue
+        lastUpdateTime: $lastUpdateTime
+        savedDate: $savedDate
+      }
+      """.trimMargin()
+  }
+}
