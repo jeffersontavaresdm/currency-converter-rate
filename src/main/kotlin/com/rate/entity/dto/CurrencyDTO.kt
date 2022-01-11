@@ -4,7 +4,7 @@ import com.rate.entity.Currency
 import java.time.LocalDate
 
 data class CurrencyDTO(
-  val currencyType: String,
+  val type: String,
   val name: String,
   val maxValue: Double,
   val minValue: Double,
@@ -13,7 +13,7 @@ data class CurrencyDTO(
 
 fun Currency.toDTO(): CurrencyDTO {
   return CurrencyDTO(
-    currencyType = type,
+    type = type,
     name = name,
     maxValue = maxValue,
     minValue = minValue,

@@ -24,7 +24,7 @@ class CurrencyConverterController(val service: CurrencyConverterService) {
   }
 
   @GetMapping("/all")
-  fun listAll(): Set<CurrencyDTO> {
+  fun listAll(): MutableMap<String, CurrencyDTO> {
     return service.getAll()
   }
 }

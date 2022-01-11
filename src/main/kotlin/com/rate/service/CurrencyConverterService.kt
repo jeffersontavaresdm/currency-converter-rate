@@ -18,8 +18,8 @@ class CurrencyConverterService(private val repository: CurrencyRepository) {
     return repository.save(currency)
   }
 
-  fun getInfoList(currencyType: String, pageable: Pageable): Page<CurrencyDTO> {
-    val page = repository.findAllByTypeOrderBySavedDateDesc(currencyType, pageable)
+  fun getInfoList(type: String, pageable: Pageable): Page<CurrencyDTO> {
+    val page = repository.findAllByTypeOrderBySavedDateDesc(type, pageable)
 
     return page.map { currency ->
       logger.info("Currency:\n{}", currency)
@@ -27,11 +27,12 @@ class CurrencyConverterService(private val repository: CurrencyRepository) {
     }
   }
 
-  fun getAll(): Set<CurrencyDTO> {
-    val list = repository.findAll().map { currency ->
+  fun getAll(): MutableMap<String, CurrencyDTO> {
+    val map = mutableMapOf<String, CurrencyDTO>()
+    repository.getAllOrderById().forEach { currency ->
       logger.info("Currency:\n{}", currency)
-      currency.toDTO()
+      map[currency.type] = currency.toDTO()
     }
-    return list.toSet()
+    return map
   }
 }
