@@ -21,15 +21,17 @@ class CurrencyConverterService(private val repository: CurrencyRepository) {
   fun getInfoList(currencyType: String, pageable: Pageable): Page<CurrencyDTO> {
     val page = repository.findAllByTypeOrderBySavedDateDesc(currencyType, pageable)
 
-    return if (currencyType == "all") {
-      repository
-        .findAll(pageable)
-        .map { currency ->
-          logger.info("Currency {}: ", currency)
-          currency?.toDTO()
-        }
-    } else {
-      page.map { it.toDTO() }
+    return page.map { currency ->
+      logger.info("Currency:\n{}", currency)
+      currency.toDTO()
     }
+  }
+
+  fun getAll(): Set<CurrencyDTO> {
+    val list = repository.findAll().map { currency ->
+      logger.info("Currency:\n{}", currency)
+      currency.toDTO()
+    }
+    return list.toSet()
   }
 }

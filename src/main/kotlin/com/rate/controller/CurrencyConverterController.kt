@@ -22,4 +22,9 @@ class CurrencyConverterController(val service: CurrencyConverterService) {
 
     return service.getInfoList(currencyType.toUpperCase(), pageable)
   }
+
+  @GetMapping("/all")
+  fun listAll(): Set<CurrencyDTO> {
+    return service.getAll()
+  }
 }
