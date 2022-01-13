@@ -1,7 +1,7 @@
 package com.rate.enum
 
 enum class CurrencyTypes(val value: String) {
-//  ALL("Um de cada valor de cada uma das moedas no dia"),
+  ALL("Um de cada valor de cada uma das moedas no dia"),
   USD("Dólar Americano/Real Brasileiro"),
   CAD("Dólar Canadense/Real Brasileiro"),
   GBP("Libra Esterlina/Real Brasileiro"),
