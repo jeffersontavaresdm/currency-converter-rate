@@ -1,7 +1,7 @@
 package com.rate.entity.dto
 
 data class CurrencyTypesData(
-  val ALL: String,
+//  val ALL: String,
   val USD: String,
   val CAD: String,
   val GBP: String,

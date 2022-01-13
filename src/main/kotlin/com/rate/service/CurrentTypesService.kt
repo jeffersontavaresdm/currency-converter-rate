@@ -12,6 +12,7 @@ class CurrentTypesService(private val mapper: ObjectMapper) {
     val string = StringBuilder()
       .apply {
         append("{\n")
+        append("  all: \"Um de cada valor de cada uma das moedas no dia\"),")
         CurrencyTypes.values().forEach {
           append("  \"")
           append(it.name)
