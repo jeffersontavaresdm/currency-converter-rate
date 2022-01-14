@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @Suppress("unused")
 @RestController
-@RequestMapping("/api/v1/rate")
+@RequestMapping("/")
 class CurrencyConverterController(val service: CurrencyConverterService) {
 
   @GetMapping("/{type}")
