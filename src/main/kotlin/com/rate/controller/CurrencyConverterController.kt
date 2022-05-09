@@ -16,7 +16,8 @@ class CurrencyConverterController(val service: CurrencyConverterService) {
 
   @GetMapping("/{type}")
   fun list(
-    @PathVariable("type") currencyType: String,
+    @PathVariable("type")
+    currencyType: String,
     pageable: Pageable,
   ): Page<CurrencyDTO> {
 
